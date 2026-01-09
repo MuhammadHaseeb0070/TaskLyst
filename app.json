@@ -19,7 +19,9 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.muhammadhaseeb0070.tasklyst"
     },
     "web": {
       "output": "static",
@@ -43,6 +45,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "7af216d7-065f-4aa1-8a09-84870c7e4af6"
+      }
+    },
+    "owner": "muhammadhaseeb0070"
   }
 }
