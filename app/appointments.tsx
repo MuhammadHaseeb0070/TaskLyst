@@ -694,6 +694,7 @@ const FilterModal = ({
   setStatusFilter: (filter: AppointmentStatus | null) => void;
   onApply: () => void;
 }) => {
+  const insets = useSafeAreaInsets();
   const dateOptions: DateFilter[] = ["Today", "Upcoming", "Past"];
   const statusOptions: AppointmentStatus[] = [
     "Confirmed",
@@ -713,7 +714,7 @@ const FilterModal = ({
         <Pressable className="flex-1" onPress={onClose} />
 
         {/* Filter Bottom Sheet */}
-        <View className="bg-white rounded-t-3xl px-6 pt-4 pb-8">
+        <View className="bg-white rounded-t-3xl px-6 pt-4" style={{ paddingBottom: insets.bottom + 32 }}>
           {/* Handle Bar */}
           <View className="items-center mb-4">
             <View className="w-12 h-1 rounded-full bg-gray-300" />

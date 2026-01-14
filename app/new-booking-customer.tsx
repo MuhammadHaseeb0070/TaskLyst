@@ -207,7 +207,7 @@ export default function NewBookingCustomerScreen() {
               <View className="w-12 h-1 rounded-full bg-gray-300" />
             </View>
             <Text className="text-[#2C3E50] text-[18px] font-bold mb-4 text-center">Select Country</Text>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{ paddingBottom: insets.bottom + 16 }}>
               {countryCodes.map((country) => (
                 <TouchableOpacity
                   key={country.code}

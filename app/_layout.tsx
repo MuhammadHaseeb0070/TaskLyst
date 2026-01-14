@@ -49,6 +49,19 @@ export default function RootLayout() {
         <Stack.Screen name="new-booking" />
         <Stack.Screen name="new-booking-customer" />
         <Stack.Screen name="new-booking-payment" />
+        <Stack.Screen name="services" />
+        <Stack.Screen name="service-details" />
+        <Stack.Screen name="create-service" />
+        <Stack.Screen name="create-service-step2" />
+        <Stack.Screen name="create-service-step3" />
+        <Stack.Screen 
+          name="create-service-success" 
+          options={{
+            animation: 'fade',
+            presentation: 'transparentModal',
+            gestureEnabled: false,
+          }}
+        />
         <Stack.Screen 
           name="booking-success" 
           options={{

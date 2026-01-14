@@ -9,7 +9,7 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import {
   currentUser,
@@ -19,7 +19,7 @@ import {
   JobStatus,
   DateFilter,
 } from "@/data/dummyData";
-
+import { router } from "expo-router";
 // Header Component
 const Header = () => (
   <View className="bg-[#2C3E50] px-6 pt-8 pb-8">
@@ -39,6 +39,7 @@ const Header = () => (
       </View>
       <TouchableOpacity
         className="w-12 h-12 rounded-full bg-white items-center justify-center"
+        onPress={() => router.push("/notifications")}
         style={{
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 2 },
@@ -157,6 +158,7 @@ const FilterModal = ({
   setStatusFilter: (filter: JobStatus | null) => void;
   onApply: () => void;
 }) => {
+  const insets = useSafeAreaInsets();
   const dateOptions: DateFilter[] = ["Today", "Upcoming", "Past"];
   const statusOptions: JobStatus[] = [
     "Confirmed",
@@ -176,7 +178,7 @@ const FilterModal = ({
         <Pressable className="flex-1" onPress={onClose} />
 
         {/* Filter Bottom Sheet */}
-        <View className="bg-white rounded-t-3xl px-6 pt-4 pb-8">
+        <View className="bg-white rounded-t-3xl px-6 pt-4" style={{ paddingBottom: insets.bottom + 32 }}>
           {/* Handle Bar */}
           <View className="items-center mb-4">
             <View className="w-12 h-1 rounded-full bg-gray-300" />
@@ -287,11 +289,21 @@ const getStatusStyle = (status: JobStatus) => {
 };
 
 // Pending Job Card
-const PendingJobCard = ({ job, isLast }: { job: (typeof allJobs)[0]; isLast?: boolean }) => {
+const PendingJobCard = ({ 
+  job, 
+  isLast,
+  onPress,
+}: { 
+  job: (typeof allJobs)[0]; 
+  isLast?: boolean;
+  onPress?: () => void;
+}) => {
   const statusStyle = getStatusStyle(job.status);
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.7}
       className={`bg-white rounded-2xl p-4 shadow-sm ${isLast ? 'mr-6' : 'mr-4'}`}
       style={{
         shadowColor: "#000",
@@ -363,7 +375,7 @@ const PendingJobCard = ({ job, isLast }: { job: (typeof allJobs)[0]; isLast?: bo
           {job.pendingJobs.description}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -701,7 +713,7 @@ export default function DashboardScreen() {
         {/* Pending Jobs */}
         <SectionHeader
           title="Pending Jobs"
-          onViewAll={() => router.push("/appointments")}
+          onViewAll={() => router.push("/quotes")}
         />
         {filteredJobs.length > 0 ? (
           <ScrollView 
@@ -715,6 +727,7 @@ export default function DashboardScreen() {
                 key={job.id} 
                 job={job} 
                 isLast={index === Math.min(filteredJobs.length, 5) - 1}
+                onPress={() => router.push("/quotes")}
               />
             ))}
           </ScrollView>

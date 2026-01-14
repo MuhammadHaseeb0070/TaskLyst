@@ -11,6 +11,7 @@ import {
   Modal,
   FlatList,
 } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter, useLocalSearchParams } from "expo-router";
 
 const countryCodes = [
@@ -39,6 +40,7 @@ const countryCodes = [
 export default function SignupPhoneFormScreen() {
   const router = useRouter();
   const params = useLocalSearchParams<{ phone?: string; code?: string }>();
+  const insets = useSafeAreaInsets();
 
   const scrollViewRef = useRef<ScrollView>(null);
   const [selectedCountry, setSelectedCountry] = useState(
@@ -98,19 +100,20 @@ export default function SignupPhoneFormScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className="flex-1 bg-white"
-      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
-    >
-      <ScrollView
-        ref={scrollViewRef}
+    <SafeAreaView className="flex-1 bg-white" edges={["top", "bottom"]}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
       >
-        <View className="flex-1 px-6 pt-10 pb-6">
+        <ScrollView
+          ref={scrollViewRef}
+          className="flex-1"
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <View className="flex-1 px-6 pt-10" style={{ paddingBottom: insets.bottom + 24 }}>
           {/* Logo */}
           <View className="mt-4 mb-4">
             <Image
@@ -383,5 +386,6 @@ export default function SignupPhoneFormScreen() {
         </View>
       </Modal>
     </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
